@@ -60,7 +60,7 @@ export function NavList({
       // slots
       title={data.title}
       path={data.path}
-      icon={data.icon}
+      // icon={data.icon}
       info={data.info}
       caption={data.caption}
       // state

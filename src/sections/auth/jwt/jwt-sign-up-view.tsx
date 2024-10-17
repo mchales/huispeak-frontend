@@ -15,7 +15,6 @@ import InputAdornment from '@mui/material/InputAdornment';
 import CircularProgress from '@mui/material/CircularProgress';
 
 import { paths } from 'src/routes/paths';
-import { useRouter } from 'src/routes/hooks';
 import { RouterLink } from 'src/routes/components';
 
 import { useBoolean } from 'src/hooks/use-boolean';
@@ -57,8 +56,6 @@ export const SignUpSchema = zod
 
 export function JwtSignUpView() {
   const { checkUserSession } = useAuthContext();
-
-  const router = useRouter();
 
   const password = useBoolean();
   const rePassword = useBoolean();

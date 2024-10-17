@@ -92,17 +92,6 @@ export function JwtSignInView() {
     }
   });
 
-  // Type guard function to check if error is an AxiosError
-  function isAxiosError(error: unknown): error is { response: { data: Record<string, unknown> } } {
-    return (
-      typeof error === 'object' &&
-      error !== null &&
-      'response' in error &&
-      typeof (error as any).response === 'object' &&
-      'data' in (error as any).response
-    );
-  }
-
   const renderHead = (
     <Stack spacing={1.5} sx={{ mb: 5 }}>
       <Typography variant="h5">Sign in to your account</Typography>

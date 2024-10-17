@@ -96,9 +96,9 @@ export function Subheader({
         typography: 'overline',
         display: 'inline-flex',
         alignSelf: 'flex-start',
-        color: 'var(--nav-subheader-color)',
+        color: 'var(--nav-bullet-dark-color)',
         padding: (theme) => theme.spacing(2, 1, 1, 1.5),
-        fontSize: (theme) => theme.typography.pxToRem(11),
+        fontSize: (theme) => theme.typography.pxToRem(14),
         transition: (theme) =>
           theme.transitions.create(['color', 'padding-left'], {
             duration: theme.transitions.duration.standard,

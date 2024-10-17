@@ -31,7 +31,7 @@ export function NavList({ data }: NavListProps) {
     <NavItem
       // slots
       path={data.path}
-      icon={data.icon}
+      // icon={data.icon}
       title={data.title}
       // state
       active={active}

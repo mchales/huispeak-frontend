@@ -4,6 +4,8 @@ import axios from 'axios';
 
 import { CONFIG } from 'src/config-global';
 
+import { STORAGE_KEY_ACCESS_TOKEN } from 'src/auth/context/jwt/constant';
+
 // ----------------------------------------------------------------------
 
 const API_VERSION = 'v1';
@@ -16,6 +18,14 @@ axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => Promise.reject((error.response && error.response.data) || 'Something went wrong!')
 );
+
+axiosInstance.interceptors.request.use((config) => {
+  const accessToken = localStorage.getItem(STORAGE_KEY_ACCESS_TOKEN);
+  if (accessToken) {
+    config.headers.Authorization = `Bearer ${accessToken}`;
+  }
+  return config;
+});
 
 export default axiosInstance;
 
@@ -48,5 +58,8 @@ export const endpoints = {
     resetPassword: `/api/${API_VERSION}/auth/users/reset_password/`, // Password reset
     resetPasswordConfirm: `/api/${API_VERSION}/auth/users/reset_password_confirm/`, // Password reset confirmation
     setPassword: `/api/${API_VERSION}/auth/users/set_password/`, // Set a new password
+  },
+  storyline: {
+    list: `/api/${API_VERSION}/storyline/`, // Get the list of storylines
   },
 };

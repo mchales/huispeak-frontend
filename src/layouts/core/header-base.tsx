@@ -93,15 +93,15 @@ export function HeaderBase({
   slotsDisplay: {
     signIn = true,
     account = true,
-    helpLink = true,
+    helpLink = false,
     settings = false,
     purchase = false,
-    contacts = true,
-    searchbar = true,
-    workspaces = true,
+    contacts = false,
+    searchbar = false,
+    workspaces = false,
     menuButton = true,
-    localization = true,
-    notifications = true,
+    localization = false,
+    notifications = false,
   } = {},
   ...other
 }: HeaderBaseProps) {

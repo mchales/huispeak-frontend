@@ -6,6 +6,7 @@ import type { Viewport } from 'next';
 
 import { CONFIG } from 'src/config-global';
 import { primary } from 'src/theme/core/palette';
+import { Providers } from 'src/app/store-provider';
 import { ThemeProvider } from 'src/theme/theme-provider';
 import { getInitColorSchemeScript } from 'src/theme/color-scheme-script';
 
@@ -41,13 +42,15 @@ export default async function RootLayout({ children }: Props) {
             settings={settings}
             caches={CONFIG.isStaticExport ? 'localStorage' : 'cookie'}
           >
-            <ThemeProvider>
-              <MotionLazy>
-                <ProgressBar />
-                <SettingsDrawer />
-                {children}
-              </MotionLazy>
-            </ThemeProvider>
+            <Providers>
+              <ThemeProvider>
+                <MotionLazy>
+                  <ProgressBar />
+                  <SettingsDrawer />
+                  {children}
+                </MotionLazy>
+              </ThemeProvider>
+            </Providers>
           </SettingsProvider>
         </AuthProvider>
       </body>

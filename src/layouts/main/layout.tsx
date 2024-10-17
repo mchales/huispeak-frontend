@@ -2,8 +2,6 @@
 
 import type { Theme, SxProps, Breakpoint } from '@mui/material/styles';
 
-import { useTheme } from '@mui/material/styles';
-
 import { usePathname } from 'src/routes/hooks';
 
 import { useBoolean } from 'src/hooks/use-boolean';
@@ -26,7 +24,7 @@ export type MainLayoutProps = {
 };
 
 export function MainLayout({ sx, data, children }: MainLayoutProps) {
-  const theme = useTheme();
+  // const theme = useTheme();
 
   const pathname = usePathname();
 
@@ -38,34 +36,34 @@ export function MainLayout({ sx, data, children }: MainLayoutProps) {
 
   return (
     <LayoutSection
-        /** **************************************
-         * Header
-         *************************************** */
-        headerSection={
-          <HeaderBase
-            layoutQuery={layoutQuery}
-            onOpenNav={mobileNavOpen.onTrue}
-            slotsDisplay={{
-              account: false,
-              helpLink: false,
-              contacts: false,
-              searchbar: false,
-              workspaces: false,
-              localization: false,
-              notifications: false,
-            }}
-          />
-        }
-        /** **************************************
-         * Footer
-         *************************************** */
-        footerSection={homePage ? <HomeFooter /> : <Footer layoutQuery={layoutQuery} />}
-        /** **************************************
-         * Style
-         *************************************** */
-        sx={sx}
-      >
-        <Main>{children}</Main>
-      </LayoutSection>
+      /** **************************************
+       * Header
+       *************************************** */
+      headerSection={
+        <HeaderBase
+          layoutQuery={layoutQuery}
+          onOpenNav={mobileNavOpen.onTrue}
+          slotsDisplay={{
+            account: false,
+            helpLink: false,
+            contacts: false,
+            searchbar: false,
+            workspaces: false,
+            localization: false,
+            notifications: false,
+          }}
+        />
+      }
+      /** **************************************
+       * Footer
+       *************************************** */
+      footerSection={homePage ? <HomeFooter /> : <Footer layoutQuery={layoutQuery} />}
+      /** **************************************
+       * Style
+       *************************************** */
+      sx={sx}
+    >
+      <Main>{children}</Main>
+    </LayoutSection>
   );
 }

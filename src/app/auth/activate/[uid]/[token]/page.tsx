@@ -2,8 +2,10 @@
 
 import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { activateAccount } from 'src/auth/context/jwt/action';
+
 import { paths } from 'src/routes/paths';
+
+import { activateAccount } from 'src/auth/context/jwt/action';
 
 const ActivateAccount = () => {
   const router = useRouter();

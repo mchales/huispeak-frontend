@@ -59,7 +59,7 @@ export function NavList({
       render={render}
       // slots
       path={data.path}
-      icon={data.icon}
+      // icon={data.icon}
       info={data.info}
       title={data.title}
       caption={data.caption}

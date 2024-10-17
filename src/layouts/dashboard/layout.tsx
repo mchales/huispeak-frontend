@@ -1,10 +1,12 @@
 'use client';
 
+import type { RootState, AppDispatch } from 'src/lib/types';
 import type { SettingsState } from 'src/components/settings';
 import type { NavSectionProps } from 'src/components/nav-section';
 import type { Theme, SxProps, CSSObject, Breakpoint } from '@mui/material/styles';
 
-import { useMemo } from 'react';
+import { useMemo, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
 import Alert from '@mui/material/Alert';
 import { useTheme } from '@mui/material/styles';
@@ -14,6 +16,7 @@ import { useBoolean } from 'src/hooks/use-boolean';
 
 import { _contacts, _notifications } from 'src/_mock';
 import { varAlpha, stylesMode } from 'src/theme/styles';
+import { fetchNavContent } from 'src/lib/features/nav/nav-slice';
 
 import { bulletColor } from 'src/components/nav-section';
 import { useSettingsContext } from 'src/components/settings';
@@ -27,7 +30,7 @@ import { _account } from '../config-nav-account';
 import { HeaderBase } from '../core/header-base';
 import { _workspaces } from '../config-nav-workspace';
 import { LayoutSection } from '../core/layout-section';
-import { navData as dashboardNavData } from '../config-nav-dashboard';
+// import { navData as dashboardNavData } from '../config-nav-dashboard';
 
 // ----------------------------------------------------------------------
 
@@ -40,6 +43,9 @@ export type DashboardLayoutProps = {
 };
 
 export function DashboardLayout({ sx, children, data }: DashboardLayoutProps) {
+  const dispatch = useDispatch<AppDispatch>();
+  const navDataState = useSelector((state: RootState) => state.navData);
+
   const theme = useTheme();
 
   const mobileNavOpen = useBoolean();
@@ -50,13 +56,51 @@ export function DashboardLayout({ sx, children, data }: DashboardLayoutProps) {
 
   const layoutQuery: Breakpoint = 'lg';
 
-  const navData = data?.nav ?? dashboardNavData;
+  // const navData = data?.nav ?? dashboardNavData;
 
   const isNavMini = settings.navLayout === 'mini';
 
   const isNavHorizontal = settings.navLayout === 'horizontal';
 
   const isNavVertical = isNavMini || settings.navLayout === 'vertical';
+
+  console.log(settings.navLayout);
+
+  useEffect(() => {
+    if (navDataState.status === 'idle') {
+      dispatch(fetchNavContent());
+    }
+  }, [navDataState.status, dispatch]);
+
+  const navData = useMemo(
+    () =>
+      navDataState.stories.map((story) => ({
+        subheader: story.title,
+        items: story.adventures.map((adventure, adventureIndex) => ({
+          title: `${adventureIndex + 1}. ${adventure.title}`, // Adds a number before each adventure title
+          path: `/dashboard/adventure/${adventure.id}`,
+          children: [
+            {
+              title: '0. Overview', // Adds "Overview" as the first child
+              path: `/dashboard/adventure/${adventure.id}`,
+            },
+            ...adventure.quests.map((quest, questIndex) => ({
+              title: `${questIndex + 1}. ${quest.title}`, // Numbers quests starting from 1
+              path: `/dashboard/adventure/${adventure.id}/quests/${quest.id}`,
+            })),
+          ],
+        })),
+      })),
+    [navDataState.stories]
+  );
+
+  if (navDataState.status === 'loading') {
+    return <div>Loading navigation...</div>;
+  }
+
+  if (navDataState.status === 'failed') {
+    return <div>Error: {navDataState.error}</div>;
+  }
 
   return (
     <>

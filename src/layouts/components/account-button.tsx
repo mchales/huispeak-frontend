@@ -15,10 +15,10 @@ import { varHover, AnimateAvatar } from 'src/components/animate';
 export type AccountButtonProps = IconButtonProps & {
   open: boolean;
   photoURL: string;
-  displayName: string;
+  username: string;
 };
 
-export function AccountButton({ open, photoURL, displayName, sx, ...other }: AccountButtonProps) {
+export function AccountButton({ open, photoURL, username, sx, ...other }: AccountButtonProps) {
   const theme = useTheme();
 
   const renderFallback = (
@@ -52,7 +52,7 @@ export function AccountButton({ open, photoURL, displayName, sx, ...other }: Acc
       <NoSsr fallback={renderFallback}>
         <AnimateAvatar
           slotProps={{
-            avatar: { src: photoURL, alt: displayName },
+            avatar: { src: photoURL, alt: username },
             overlay: {
               border: 1,
               spacing: 2,
@@ -60,7 +60,7 @@ export function AccountButton({ open, photoURL, displayName, sx, ...other }: Acc
             },
           }}
         >
-          {displayName?.charAt(0).toUpperCase()}
+          {username?.charAt(0).toUpperCase()}
         </AnimateAvatar>
       </NoSsr>
     </IconButton>

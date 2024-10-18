@@ -4,7 +4,10 @@ import axios from 'axios';
 
 import { CONFIG } from 'src/config-global';
 
-import { STORAGE_KEY_ACCESS_TOKEN } from 'src/auth/context/jwt/constant';
+import { paths } from 'src/routes/paths';
+
+import { STORAGE_KEY_ACCESS_TOKEN, STORAGE_KEY_REFRESH_TOKEN } from 'src/auth/context/jwt/constant';
+import { isValidToken, setSession } from 'src/auth/context/jwt/utils';
 
 // ----------------------------------------------------------------------
 
@@ -14,11 +17,6 @@ const API_VERSION = 'v1';
 
 const axiosInstance = axios.create({ baseURL: CONFIG.site.serverUrl });
 
-axiosInstance.interceptors.response.use(
-  (response) => response,
-  (error) => Promise.reject((error.response && error.response.data) || 'Something went wrong!')
-);
-
 axiosInstance.interceptors.request.use((config) => {
   const accessToken = localStorage.getItem(STORAGE_KEY_ACCESS_TOKEN);
   if (accessToken) {
@@ -26,6 +24,42 @@ axiosInstance.interceptors.request.use((config) => {
   }
   return config;
 });
+
+axiosInstance.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const originalRequest = error.config;
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+
+      let refreshToken = localStorage.getItem(STORAGE_KEY_REFRESH_TOKEN);
+
+      if (refreshToken && isValidToken(refreshToken)) {
+        try {
+          const res = await axiosInstance.post(endpoints.auth.refreshToken, {
+            refresh: refreshToken,
+          });
+
+          const accessToken = res.data.access;
+          const newRefreshToken = res.data.refresh;
+
+          if (accessToken) {
+            await setSession(accessToken, newRefreshToken);
+            originalRequest.headers.Authorization = `Bearer ${accessToken}`;
+            return axiosInstance(originalRequest);
+          }
+        } catch (error) {
+          console.error('Error refreshing token:', error);
+          window.location.href = paths.auth.jwt.signIn;
+        }
+      } else {
+        window.location.href = paths.auth.jwt.signIn;
+      }
+    }
+
+    return Promise.reject(error);
+  }
+);
 
 export default axiosInstance;
 
@@ -61,5 +95,6 @@ export const endpoints = {
   },
   storyline: {
     list: `/api/${API_VERSION}/storyline/`, // Get the list of storylines
+    adventure: (adventureId: Number) => `/api/${API_VERSION}/adventure/${adventureId}/`, // Get adventure detail
   },
 };

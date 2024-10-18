@@ -75,7 +75,7 @@ export async function setSession(accessToken: string | null, refreshToken: strin
       localStorage.setItem(STORAGE_KEY_ACCESS_TOKEN, accessToken);
       localStorage.setItem(STORAGE_KEY_REFRESH_TOKEN, refreshToken);
 
-      axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
+      // axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
     } else {
       localStorage.removeItem(STORAGE_KEY_ACCESS_TOKEN);
       localStorage.removeItem(STORAGE_KEY_REFRESH_TOKEN);

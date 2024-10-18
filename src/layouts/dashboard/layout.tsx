@@ -6,7 +6,7 @@ import type { NavSectionProps } from 'src/components/nav-section';
 import type { Theme, SxProps, CSSObject, Breakpoint } from '@mui/material/styles';
 
 import { useMemo, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
 
 import Alert from '@mui/material/Alert';
 import { useTheme } from '@mui/material/styles';
@@ -43,8 +43,8 @@ export type DashboardLayoutProps = {
 };
 
 export function DashboardLayout({ sx, children, data }: DashboardLayoutProps) {
-  const dispatch = useDispatch<AppDispatch>();
-  const navDataState = useSelector((state: RootState) => state.navData);
+  const dispatch = useAppDispatch();
+  const navDataState = useAppSelector((state: RootState) => state.navData);
 
   const theme = useTheme();
 

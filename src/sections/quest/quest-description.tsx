@@ -1,25 +1,27 @@
+// src/components/quest-description.tsx
+
 'use client';
 
 import React from 'react';
 
 import { Box, Container, Typography, CircularProgress } from '@mui/material';
 
-type Adventure = {
+interface Quest {
   title: string;
   description: string;
-  story: {
+  adventure: {
     title: string;
     description: string;
   };
-};
+}
 
-type Props = {
-  status?: 'idle' | 'loading' | 'failed' | 'succeeded';
+interface QuestDescriptionProps {
+  quest?: Quest | null;
+  status: 'idle' | 'loading' | 'succeeded' | 'failed';
   error?: string | null;
-  adventure?: Adventure | null;
-};
+}
 
-export function AdventureStoryDescription({ status, error, adventure }: Props) {
+export function QuestDescription({ quest, status, error }: QuestDescriptionProps) {
   if (status === 'loading') {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" minHeight="80vh">
@@ -38,24 +40,24 @@ export function AdventureStoryDescription({ status, error, adventure }: Props) {
     );
   }
 
-  if (!adventure) {
+  if (!quest) {
     return null;
   }
 
   return (
     <Container maxWidth="md" sx={{ mt: 3 }}>
       <Typography variant="h4" gutterBottom>
-        {adventure.story.title}
+        {quest.adventure.title}
       </Typography>
       <Typography variant="body1" color="textSecondary" paragraph>
-        {adventure.story.description}
+        {quest.adventure.description}
       </Typography>
 
       <Typography variant="h5" gutterBottom>
-        {adventure.title}
+        {quest.title}
       </Typography>
       <Typography variant="body1" paragraph>
-        {adventure.description}
+        {quest.description}
       </Typography>
     </Container>
   );

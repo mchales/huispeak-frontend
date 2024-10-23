@@ -1,5 +1,6 @@
 // lib/features/adventure/adventure-slice.ts
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+
 import axiosInstance, { endpoints } from 'src/utils/axios';
 
 interface AdventureDetailState {

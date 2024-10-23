@@ -1,7 +1,5 @@
 import { paths } from 'src/routes/paths';
 
-import axios from 'src/utils/axios';
-
 import { STORAGE_KEY_ACCESS_TOKEN, STORAGE_KEY_REFRESH_TOKEN } from './constant';
 
 // ----------------------------------------------------------------------
@@ -79,7 +77,6 @@ export async function setSession(accessToken: string | null, refreshToken: strin
     } else {
       localStorage.removeItem(STORAGE_KEY_ACCESS_TOKEN);
       localStorage.removeItem(STORAGE_KEY_REFRESH_TOKEN);
-      delete axios.defaults.headers.common.Authorization;
     }
   } catch (error) {
     console.error('Error during set session:', error);

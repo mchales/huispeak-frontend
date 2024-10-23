@@ -1,12 +1,11 @@
 'use client';
 
-import type { RootState, AppDispatch } from 'src/lib/types';
+import type { RootState } from 'src/lib/types';
 import type { SettingsState } from 'src/components/settings';
 import type { NavSectionProps } from 'src/components/nav-section';
 import type { Theme, SxProps, CSSObject, Breakpoint } from '@mui/material/styles';
 
 import { useMemo, useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
 
 import Alert from '@mui/material/Alert';
 import { useTheme } from '@mui/material/styles';
@@ -16,6 +15,7 @@ import { useBoolean } from 'src/hooks/use-boolean';
 
 import { _contacts, _notifications } from 'src/_mock';
 import { varAlpha, stylesMode } from 'src/theme/styles';
+import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
 import { fetchNavContent } from 'src/lib/features/nav/nav-slice';
 
 import { bulletColor } from 'src/components/nav-section';

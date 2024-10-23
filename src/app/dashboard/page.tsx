@@ -1,11 +1,36 @@
-import { CONFIG } from 'src/config-global';
+import React from 'react';
 
-import { BlankView } from 'src/sections/blank/view';
+import { Box, Container, Typography } from '@mui/material';
 
-// ----------------------------------------------------------------------
+export const metadata = { title: 'Dashboard - Practice Practical Situations in Chinese' };
 
-export const metadata = { title: `Dashboard - ${CONFIG.site.name}` };
+const Page: React.FC = () => (
+    <Container maxWidth="md" sx={{ textAlign: 'center', mt: 8 }}>
+      {/* Header */}
+      <Typography variant="h3" component="h1" gutterBottom>
+        Practice Practical Situations in Chinese
+      </Typography>
 
-export default function Page() {
-  return <BlankView title="Page one" />;
-}
+      {/* Sub-header */}
+      <Typography variant="h5" color="textSecondary" gutterBottom>
+        Improve your conversational skills through real-world situations
+      </Typography>
+
+      {/* Main Call-to-Action */}
+      {/* <Box mt={4}>
+        <Button variant="contained" color="primary" size="large" sx={{ px: 6, py: 2 }}>
+          Start Learning
+        </Button>
+      </Box> */}
+
+      {/* Description */}
+      <Box mt={6}>
+        <Typography variant="body1" color="textSecondary">
+          Explore various scenarios that reflect practical, everyday conversations in Chinese. Dive
+          into cultural experiences while enhancing your language skills.
+        </Typography>
+      </Box>
+    </Container>
+  );
+
+export default Page;

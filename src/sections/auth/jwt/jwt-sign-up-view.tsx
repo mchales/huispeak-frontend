@@ -64,7 +64,7 @@ export function JwtSignUpView() {
   const [errorMsg, setErrorMsg] = useState('');
 
   const defaultValues = {
-    username: 'vandybear',
+    username: 'randomuser',
     firstName: 'Sean',
     lastName: 'McHale',
     email: 'smchaleer9@gmail.com',

@@ -2,12 +2,12 @@ import type { AxiosRequestConfig } from 'axios';
 
 import axios from 'axios';
 
-import { CONFIG } from 'src/config-global';
-
 import { paths } from 'src/routes/paths';
 
+import { CONFIG } from 'src/config-global';
+
+import { setSession, isValidToken } from 'src/auth/context/jwt/utils';
 import { STORAGE_KEY_ACCESS_TOKEN, STORAGE_KEY_REFRESH_TOKEN } from 'src/auth/context/jwt/constant';
-import { isValidToken, setSession } from 'src/auth/context/jwt/utils';
 
 // ----------------------------------------------------------------------
 
@@ -32,7 +32,7 @@ axiosInstance.interceptors.response.use(
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
 
-      let refreshToken = localStorage.getItem(STORAGE_KEY_REFRESH_TOKEN);
+      const refreshToken = localStorage.getItem(STORAGE_KEY_REFRESH_TOKEN);
 
       if (refreshToken && isValidToken(refreshToken)) {
         try {
@@ -46,13 +46,15 @@ axiosInstance.interceptors.response.use(
           if (accessToken) {
             await setSession(accessToken, newRefreshToken);
             originalRequest.headers.Authorization = `Bearer ${accessToken}`;
-            return axiosInstance(originalRequest);
+            return await axiosInstance(originalRequest); // Added 'await' here
           }
-        } catch (error) {
-          console.error('Error refreshing token:', error);
+        } catch (err) {
+          // Renamed 'error' to 'err' to avoid shadowing
+          console.error('Error refreshing token:', err);
           window.location.href = paths.auth.jwt.signIn;
         }
       } else {
+        delete axios.defaults.headers.common.Authorization;
         window.location.href = paths.auth.jwt.signIn;
       }
     }
@@ -95,6 +97,7 @@ export const endpoints = {
   },
   storyline: {
     list: `/api/${API_VERSION}/storyline/`, // Get the list of storylines
-    adventure: (adventureId: Number) => `/api/${API_VERSION}/adventure/${adventureId}/`, // Get adventure detail
+    adventure: (adventureId: Number) => `/api/${API_VERSION}/adventure/${adventureId}/`,
+    quest: (questId: Number) => `/api/${API_VERSION}/quest/${questId}/`,
   },
 };

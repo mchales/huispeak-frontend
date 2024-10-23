@@ -23,8 +23,6 @@ type NavMobileProps = NavSectionProps & {
 };
 
 export function NavMobile({ data, open, onClose, slots, sx, ...other }: NavMobileProps) {
-  console.log('NavMobile');
-
   const pathname = usePathname();
 
   useEffect(() => {

@@ -21,6 +21,7 @@ interface QuestDetailState {
         story_num: number;
       };
     };
+    objectives: { id: string; objective: string }[];
     assistant_id: string | null;
   } | null;
   status: 'idle' | 'loading' | 'succeeded' | 'failed';

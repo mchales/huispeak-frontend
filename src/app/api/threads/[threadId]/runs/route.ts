@@ -2,18 +2,19 @@ import { NextResponse } from 'next/server';
 
 import { openai } from 'src/utils/openai';
 
+export const runtime = 'nodejs';
+
 // Send a new message to a thread
 export async function POST(
   request: any,
   { params: { threadId } }: { params: { threadId: string } }
 ) {
-  let accumulatedResponse = ''; // Initialize a buffer to accumulate the response
+  let accumulatedResponse = '';
+  let messageId: string | null = null;
 
   try {
-    // Extract assistant_id from the request body
     const { assistant_id } = await request.json();
 
-    // Validate assistant_id
     if (!assistant_id) {
       return NextResponse.json(
         { status: 'error', message: 'assistant_id is missing' },
@@ -21,14 +22,18 @@ export async function POST(
       );
     }
 
-    // Create a stream to the assistant
     const stream = await openai.beta.threads.runs.stream(threadId, {
-      assistant_id, // Pass the assistant_id as an argument
+      assistant_id,
     });
 
-    // Accumulate the response
+    // Even though we could wait for this to be over, we may want to utilize streaming for
+    // efficiency boosts or visuals in the future
     await new Promise((resolve, reject) => {
       stream
+        .on('messageCreated', (message) => {
+          messageId = message.id;
+          console.log('Run ID:', messageId);
+        })
         .on('textDelta', (textDelta) => {
           try {
             accumulatedResponse += textDelta.value;
@@ -41,13 +46,17 @@ export async function POST(
           console.error('Error during streaming:', error);
           reject(error);
         })
-        .on('end', () => {
+        .on('textDone', () => {
+          console.log('End of stream');
           resolve('End of stream');
         });
     });
 
     // Return the accumulated response as a whole message
-    return NextResponse.json({ status: 'success', message: accumulatedResponse }, { status: 200 });
+    return NextResponse.json(
+      { status: 'success', message: accumulatedResponse, message_id: messageId },
+      { status: 200 }
+    );
   } catch (error) {
     console.error('Error while processing:', error);
     return NextResponse.json({ status: 'error', message: error.message }, { status: 500 });

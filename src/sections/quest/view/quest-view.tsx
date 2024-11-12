@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
 import { fetchQuestDetail } from 'src/lib/features/quest/quest-slice';
 
 import QuestChat from '../quest-chat';
+import { QuestObjectives } from '../quest-objectives';
 import { QuestDescription } from '../quest-description';
 
 export function QuestView() {
@@ -28,6 +29,7 @@ export function QuestView() {
     <>
       <QuestDescription status={status} error={error} quest={quest} />
       <QuestChat assistantId={quest?.assistant_id} />
+      <QuestObjectives status={status} error={error} quest={quest} />
     </>
   );
 }

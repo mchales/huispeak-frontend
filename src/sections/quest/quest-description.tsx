@@ -1,10 +1,13 @@
-// src/components/quest-description.tsx
-
 'use client';
 
 import React from 'react';
 
-import { Box, Container, Typography, CircularProgress } from '@mui/material';
+import {
+  Box,
+  Container,
+  Typography,
+  CircularProgress,
+} from '@mui/material';
 
 interface Quest {
   title: string;
@@ -13,6 +16,7 @@ interface Quest {
     title: string;
     description: string;
   };
+  objectives: { id: string; objective: string }[];
 }
 
 interface QuestDescriptionProps {
@@ -45,7 +49,7 @@ export function QuestDescription({ quest, status, error }: QuestDescriptionProps
   }
 
   return (
-    <Container maxWidth="md" sx={{ mt: 3 }}>
+    <Container maxWidth="lg" sx={{ mt: 3 }}>
       <Typography variant="h4" gutterBottom>
         {quest.adventure.title}
       </Typography>

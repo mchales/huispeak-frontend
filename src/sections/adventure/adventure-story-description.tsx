@@ -3,6 +3,7 @@
 import React from 'react';
 
 import { Box, Container, Typography, CircularProgress } from '@mui/material';
+import { NextButton } from 'src/components/navigation/next-button';
 
 type Adventure = {
   title: string;
@@ -57,6 +58,9 @@ export function AdventureStoryDescription({ status, error, adventure }: Props) {
       <Typography variant="body1" paragraph>
         {adventure.description}
       </Typography>
+      <Box display="flex" justifyContent="center" mt={3}>
+        <NextButton />
+      </Box>
     </Container>
   );
 }

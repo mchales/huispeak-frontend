@@ -11,6 +11,7 @@ import { fetchQuestDetail } from 'src/lib/features/quest/quest-slice';
 import QuestChat from '../quest-chat';
 import { QuestObjectives } from '../quest-objectives';
 import { QuestDescription } from '../quest-description';
+import { QuestNext } from '../quest-next';
 
 export function QuestView() {
   const params = useParams();
@@ -27,9 +28,15 @@ export function QuestView() {
 
   return (
     <>
-      <QuestDescription status={status} error={error} quest={quest} />
-      <QuestChat assistantId={quest?.assistant_id} />
-      <QuestObjectives status={status} error={error} quest={quest} />
+      {status === 'succeeded' && quest && (
+        <>
+          <QuestDescription status={status} error={error} quest={quest} />
+          <QuestObjectives status={status} error={error} quest={quest} />
+          <QuestChat status={status} error={error} quest={quest} />
+
+          <QuestNext />
+        </>
+      )}
     </>
   );
 }

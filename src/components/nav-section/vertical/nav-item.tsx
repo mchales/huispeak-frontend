@@ -1,4 +1,4 @@
-import { forwardRef } from 'react';
+import { act, forwardRef, useEffect } from 'react';
 
 import Box from '@mui/material/Box';
 import Tooltip from '@mui/material/Tooltip';
@@ -24,6 +24,7 @@ export const NavItem = forwardRef<HTMLButtonElement, NavItemProps>(
       info,
       title,
       caption,
+      setOpenMenu,
       //
       open,
       depth,
@@ -48,6 +49,13 @@ export const NavItem = forwardRef<HTMLButtonElement, NavItemProps>(
       externalLink,
       enabledRootRedirect,
     });
+
+    // This allows the menu to open when next button is used
+    useEffect(() => {
+      if (setOpenMenu) {
+        setOpenMenu(true);
+      }
+    }, [active]);
 
     return (
       <StyledNavItem

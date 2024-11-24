@@ -1,5 +1,3 @@
-// hooks/useTranscription.ts
-
 import { useState } from 'react';
 
 const useTranscribe = () => {
@@ -24,20 +22,21 @@ const useTranscribe = () => {
         } catch (parseError) {
           console.error('Failed to parse error response:', parseError);
         }
+        setTranscriptionLoading(false); // Ensure loading state is reset
         throw new Error(errorMsg);
       }
 
       const data = await response.json();
       if (data && data.data.text) {
+        setTranscriptionLoading(false);
         return data.data.text;
-      } 
-        throw new Error('No transcription received');
-      
+      }
+      setTranscriptionLoading(false); // Ensure loading state is reset
+      throw new Error('No transcription received');
     } catch (error: any) {
       console.error('Transcription error:', error);
+      setTranscriptionLoading(false); // Ensure loading state is reset
       throw new Error(error.message || 'Network error');
-    } finally {
-      setTranscriptionLoading(false);
     }
   };
 

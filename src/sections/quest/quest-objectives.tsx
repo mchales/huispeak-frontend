@@ -11,24 +11,9 @@ import {
   ListItemText,
   CircularProgress,
 } from '@mui/material';
+import { QuestDetailState } from 'src/lib/types';
 
-interface Quest {
-  title: string;
-  description: string;
-  adventure: {
-    title: string;
-    description: string;
-  };
-  objectives: { id: string; objective: string }[];
-}
-
-interface QuestObjectivesProps {
-  quest?: Quest | null;
-  status: 'idle' | 'loading' | 'succeeded' | 'failed';
-  error?: string | null;
-}
-
-export function QuestObjectives({ quest, status, error }: QuestObjectivesProps) {
+export function QuestObjectives({ quest, status, error }: QuestDetailState) {
   if (status === 'loading') {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" minHeight="80vh">

@@ -15,6 +15,7 @@ interface MessageBubbleProps {
   isUser: boolean;
   onMicrophoneClick?: () => void;
   isRecording?: boolean;
+  disableMicrophone?: boolean; // New prop
   sx?: SxProps;
 }
 
@@ -24,6 +25,7 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({
   isUser,
   onMicrophoneClick,
   isRecording,
+  disableMicrophone,
   sx,
 }) => {
   const [isBlurred, setIsBlurred] = useState(!isUser);
@@ -37,8 +39,8 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({
     <Box
       sx={{
         position: 'relative',
-        width: '200px',
-        height: '90px',
+        width: '220px',
+        height: '110px',
         p: 1,
         pl: 1.5,
         borderRadius: 1,
@@ -56,6 +58,7 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({
           onClick={onMicrophoneClick}
           color={isRecording ? 'secondary' : 'default'}
           size="small"
+          disabled={disableMicrophone} // Disable when assistant is processing
           sx={{ position: 'absolute', bottom: 2, left: -4 }}
           aria-label={isRecording ? 'Stop Recording' : 'Start Recording'}
         >
@@ -80,7 +83,7 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({
           overflowY: 'auto',
           height: '100%',
           width: '100%',
-          alignItems: 'center',
+
           justifyContent: isLoading ? 'center' : 'flex-start',
           display: 'flex',
         }}
@@ -92,6 +95,7 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({
             variant="body1"
             sx={{
               ml: isUser ? 1 : 0,
+              mr: isUser ? 0 : 2,
               filter: !isUser && isBlurred ? 'blur(5px)' : 'none',
               transition: 'filter 0.3s ease',
               userSelect: !isUser && isBlurred ? 'none' : 'auto',

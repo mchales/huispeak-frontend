@@ -45,6 +45,7 @@ export function NavList({ data, render, depth, slotProps, enabledRootRedirect }:
       info={data.info}
       title={data.title}
       caption={data.caption}
+      setOpenMenu={setOpenMenu}
       // state
       depth={depth}
       active={active}

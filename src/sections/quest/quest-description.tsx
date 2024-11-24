@@ -2,30 +2,11 @@
 
 import React from 'react';
 
-import {
-  Box,
-  Container,
-  Typography,
-  CircularProgress,
-} from '@mui/material';
+import { Box, Container, Typography, CircularProgress } from '@mui/material';
 
-interface Quest {
-  title: string;
-  description: string;
-  adventure: {
-    title: string;
-    description: string;
-  };
-  objectives: { id: string; objective: string }[];
-}
+import { QuestDetailState } from 'src/lib/types';
 
-interface QuestDescriptionProps {
-  quest?: Quest | null;
-  status: 'idle' | 'loading' | 'succeeded' | 'failed';
-  error?: string | null;
-}
-
-export function QuestDescription({ quest, status, error }: QuestDescriptionProps) {
+export function QuestDescription({ quest, status, error }: QuestDetailState) {
   if (status === 'loading') {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" minHeight="80vh">

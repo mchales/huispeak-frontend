@@ -13,7 +13,7 @@ export async function POST(
   let messageId: string | null = null;
 
   try {
-    const { assistant_id } = await request.json();
+    const { assistant_id, additional_instructions } = await request.json();
 
     if (!assistant_id) {
       return NextResponse.json(
@@ -22,8 +22,10 @@ export async function POST(
       );
     }
 
+    console.log(additional_instructions);
     const stream = await openai.beta.threads.runs.stream(threadId, {
       assistant_id,
+      additional_instructions,
     });
 
     // Even though we could wait for this to be over, we may want to utilize streaming for

@@ -100,4 +100,9 @@ export const endpoints = {
     adventure: (adventureId: Number) => `/api/${API_VERSION}/adventure/${adventureId}/`,
     quest: (questId: Number) => `/api/${API_VERSION}/quest/${questId}/`,
   },
+  personalization: {
+    list: `/api/${API_VERSION}/personalizations/`, // Get the list of personalization options
+    detail: (personalizationId: Number) =>
+      `/api/${API_VERSION}/personalizations/${personalizationId}/`,
+  },
 };

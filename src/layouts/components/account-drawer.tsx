@@ -45,6 +45,8 @@ export function AccountDrawer({ data = [], sx, ...other }: AccountDrawerProps) {
 
   const { user } = useAuthContext();
 
+  console.log('user', user);
+
   const [open, setOpen] = useState(false);
 
   const handleOpenDrawer = useCallback(() => {
@@ -122,14 +124,10 @@ export function AccountDrawer({ data = [], sx, ...other }: AccountDrawerProps) {
             }}
           >
             {data.map((option) => {
-              const rootLabel = pathname.includes('/dashboard') ? 'Home' : 'Dashboard';
-
-              const rootHref = pathname.includes('/dashboard') ? '/' : paths.dashboard.root;
-
               return (
                 <MenuItem
                   key={option.label}
-                  onClick={() => handleClickItem(option.label === 'Home' ? rootHref : option.href)}
+                  onClick={() => handleClickItem(option.href)}
                   sx={{
                     py: 1,
                     color: 'text.secondary',
@@ -140,7 +138,7 @@ export function AccountDrawer({ data = [], sx, ...other }: AccountDrawerProps) {
                   {option.icon}
 
                   <Box component="span" sx={{ ml: 2 }}>
-                    {option.label === 'Home' ? rootLabel : option.label}
+                    {option.label}
                   </Box>
 
                   {option.info && (

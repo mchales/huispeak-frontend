@@ -17,6 +17,7 @@ import { _contacts, _notifications } from 'src/_mock';
 import { varAlpha, stylesMode } from 'src/theme/styles';
 import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
 import { fetchNavContent } from 'src/lib/features/nav/nav-slice';
+import { fetchPersonalization } from 'src/lib/features/personalization/personalization-slice';
 
 import { bulletColor } from 'src/components/nav-section';
 import { useSettingsContext } from 'src/components/settings';
@@ -30,7 +31,8 @@ import { _account } from '../config-nav-account';
 import { HeaderBase } from '../core/header-base';
 import { _workspaces } from '../config-nav-workspace';
 import { LayoutSection } from '../core/layout-section';
-// import { navData as dashboardNavData } from '../config-nav-dashboard';
+
+import { useAuthContext } from 'src/auth/hooks';
 
 // ----------------------------------------------------------------------
 
@@ -45,6 +47,9 @@ export type DashboardLayoutProps = {
 export function DashboardLayout({ sx, children, data }: DashboardLayoutProps) {
   const dispatch = useAppDispatch();
   const navDataState = useAppSelector((state: RootState) => state.navData);
+  const personalizationState = useAppSelector((state) => state.personalization);
+  const { personalization, status, error } = personalizationState;
+  const { user } = useAuthContext();
 
   const theme = useTheme();
 
@@ -64,13 +69,17 @@ export function DashboardLayout({ sx, children, data }: DashboardLayoutProps) {
 
   const isNavVertical = isNavMini || settings.navLayout === 'vertical';
 
-  console.log(settings.navLayout);
-
   useEffect(() => {
     if (navDataState.status === 'idle') {
       dispatch(fetchNavContent());
     }
   }, [navDataState.status, dispatch]);
+
+  useEffect(() => {
+    if (user && !personalization) {
+      dispatch(fetchPersonalization());
+    }
+  }, [user, dispatch]);
 
   const navData = useMemo(
     () =>

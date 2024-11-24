@@ -39,9 +39,13 @@ const useThread = () => {
     }
   };
 
-  const runThread = async (thread: string, assistantId: string): Promise<Message> => {
+  const runThread = async (
+    thread: string,
+    assistantId: string,
+    additionalInstructions?: string
+  ): Promise<Message> => {
     try {
-      const runResponse = await runThreadApi(thread, assistantId);
+      const runResponse = await runThreadApi(thread, assistantId, additionalInstructions);
       console.log('Run response:', runResponse);
       const assistantMessageResponse = runResponse.data;
 

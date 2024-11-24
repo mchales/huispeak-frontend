@@ -3,30 +3,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 import axiosInstance, { endpoints } from 'src/utils/axios';
 
-interface QuestDetailState {
-  quest: {
-    id: number;
-    title: string;
-    description: string;
-    quest_num: number;
-    adventure: {
-      id: number;
-      title: string;
-      description: string;
-      adventure_num: number;
-      story: {
-        id: number;
-        title: string;
-        description: string;
-        story_num: number;
-      };
-    };
-    objectives: { id: string; objective: string }[];
-    assistant_id: string | null;
-  } | null;
-  status: 'idle' | 'loading' | 'succeeded' | 'failed';
-  error: string | null;
-}
+import { QuestDetailState } from 'src/lib/types';
 
 const initialState: QuestDetailState = {
   quest: null,

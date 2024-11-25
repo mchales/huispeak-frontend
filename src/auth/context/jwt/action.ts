@@ -68,12 +68,13 @@ export const signUp = async (
   } catch (error) {
     console.error('Error during sign up:', error);
 
-    const errorData = error;
+    // Access the response data
+    const errorData = error.response?.data;
 
     // Collect error messages
     const messages: string[] = [];
 
-    if (typeof errorData === 'object') {
+    if (errorData && typeof errorData === 'object') {
       Object.entries(errorData).forEach(([key, value]) => {
         if (Array.isArray(value)) {
           messages.push(...value);
@@ -83,10 +84,8 @@ export const signUp = async (
       });
       const errorMessage = messages.join(' ');
       setErrorMsg(errorMessage);
-    } else if (error instanceof Error) {
-      setErrorMsg(error.message);
     } else {
-      setErrorMsg(String(error));
+      setErrorMsg(error.message);
     }
 
     throw error;

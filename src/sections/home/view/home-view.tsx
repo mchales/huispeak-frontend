@@ -11,7 +11,7 @@ export function HomeView() {
       {/* Hero Section */}
       <Box textAlign="center" mb={8}>
         <Typography variant="h2" component="h1" gutterBottom>
-          Practice Spoken Chinese with Our AI-Powered Platform
+          Practice Spoken Chinese with HuiSpeak
         </Typography>
         <Typography variant="h5" color="textSecondary" paragraph>
           Immerse yourself in practical situations, role-playing, and cultural experiences.
@@ -32,9 +32,7 @@ export function HomeView() {
             <Typography variant="h6" component="h3" gutterBottom>
               Practice Speaking
             </Typography>
-            <Typography color="textSecondary">
-              Improve your pronunciation and fluency with real-time feedback.
-            </Typography>
+            <Typography color="textSecondary">Improve your pronunciation and fluency.</Typography>
           </Box>
         </Grid>
 
@@ -45,7 +43,7 @@ export function HomeView() {
               Enhance Listening
             </Typography>
             <Typography color="textSecondary">
-              Understand native speakers through interactive exercises.
+              Practice understanding spoken Chinese through interactive exercises.
             </Typography>
           </Box>
         </Grid>

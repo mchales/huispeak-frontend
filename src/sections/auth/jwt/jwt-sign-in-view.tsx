@@ -68,24 +68,13 @@ export function JwtSignInView() {
     try {
       await signInWithPassword({ username: data.username, password: data.password });
       await checkUserSession?.();
-      router.refresh();
+      // router.refresh();
     } catch (error) {
       console.error(error);
-
       let errorMessage = 'An unknown error occurred. Please try again.';
-
-      // Assuming the error is a JSON object with a detail property
-      if (typeof error === 'object' && error !== null) {
-        const errorData = error as Record<string, any>;
-
-        if (typeof errorData.detail === 'string') {
-          errorMessage = errorData.detail;
-        } else if (typeof errorData.detail === 'object' && errorData.detail !== null) {
-          errorMessage = Object.values(errorData.detail).flat().join(', ');
-        }
-      } else if (error instanceof Error) {
-        // Fallback for generic Error messages
-        errorMessage = error.message;
+      if (error.response?.status === 401) {
+        setErrorMsg('Invalid username or password. Ensure email activation. Please try again.');
+        return;
       }
 
       setErrorMsg(errorMessage);

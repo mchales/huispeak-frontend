@@ -8,10 +8,10 @@ import { useParams } from 'next/navigation';
 import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
 import { fetchQuestDetail } from 'src/lib/features/quest/quest-slice';
 
-import QuestChat from '../quest-chat';
+import { QuestChat } from '../quest-chat';
+import { QuestNext } from '../quest-next';
 import { QuestObjectives } from '../quest-objectives';
 import { QuestDescription } from '../quest-description';
-import { QuestNext } from '../quest-next';
 
 export function QuestView() {
   const params = useParams();

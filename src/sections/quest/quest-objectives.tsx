@@ -1,5 +1,7 @@
 'use client';
 
+import type { QuestDetailState } from 'src/lib/types';
+
 import React from 'react';
 
 import {
@@ -11,7 +13,6 @@ import {
   ListItemText,
   CircularProgress,
 } from '@mui/material';
-import { QuestDetailState } from 'src/lib/types';
 
 export function QuestObjectives({ quest, status, error }: QuestDetailState) {
   if (status === 'loading') {

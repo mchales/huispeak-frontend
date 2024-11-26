@@ -3,6 +3,7 @@
 import React from 'react';
 
 import { Box, Container, Typography, CircularProgress } from '@mui/material';
+
 import { NextButton } from 'src/components/navigation/next-button';
 
 type Adventure = {

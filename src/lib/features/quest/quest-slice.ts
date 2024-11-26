@@ -1,9 +1,9 @@
 // lib/features/quest/quest-slice.ts
+import type { QuestDetailState } from 'src/lib/types';
+
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 import axiosInstance, { endpoints } from 'src/utils/axios';
-
-import { QuestDetailState } from 'src/lib/types';
 
 const initialState: QuestDetailState = {
   quest: null,

@@ -13,7 +13,6 @@ import { useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 
-import { paths } from 'src/routes/paths';
 import { useRouter, usePathname } from 'src/routes/hooks';
 
 import { Label } from 'src/components/label';
@@ -123,8 +122,7 @@ export function AccountDrawer({ data = [], sx, ...other }: AccountDrawerProps) {
               borderBottom: `dashed 1px ${theme.vars.palette.divider}`,
             }}
           >
-            {data.map((option) => {
-              return (
+            {data.map((option) => (
                 <MenuItem
                   key={option.label}
                   onClick={() => handleClickItem(option.href)}
@@ -147,8 +145,7 @@ export function AccountDrawer({ data = [], sx, ...other }: AccountDrawerProps) {
                     </Label>
                   )}
                 </MenuItem>
-              );
-            })}
+              ))}
           </Stack>
         </Scrollbar>
 

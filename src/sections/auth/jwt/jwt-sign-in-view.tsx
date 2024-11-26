@@ -71,7 +71,7 @@ export function JwtSignInView() {
       // router.refresh();
     } catch (error) {
       console.error(error);
-      let errorMessage = 'An unknown error occurred. Please try again.';
+      const errorMessage = 'An unknown error occurred. Please try again.';
       if (error.response?.status === 401) {
         setErrorMsg('Invalid username or password. Ensure email activation. Please try again.');
         return;

@@ -1,4 +1,4 @@
-import { act, forwardRef, useEffect } from 'react';
+import { useEffect, forwardRef } from 'react';
 
 import Box from '@mui/material/Box';
 import Tooltip from '@mui/material/Tooltip';
@@ -55,7 +55,7 @@ export const NavItem = forwardRef<HTMLButtonElement, NavItemProps>(
       if (setOpenMenu) {
         setOpenMenu(true);
       }
-    }, [active]);
+    }, [active, setOpenMenu]);
 
     return (
       <StyledNavItem

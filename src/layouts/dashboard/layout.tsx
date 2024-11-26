@@ -22,6 +22,8 @@ import { fetchPersonalization } from 'src/lib/features/personalization/personali
 import { bulletColor } from 'src/components/nav-section';
 import { useSettingsContext } from 'src/components/settings';
 
+import { useAuthContext } from 'src/auth/hooks';
+
 import { Main } from './main';
 import { NavMobile } from './nav-mobile';
 import { layoutClasses } from '../classes';
@@ -31,8 +33,6 @@ import { _account } from '../config-nav-account';
 import { HeaderBase } from '../core/header-base';
 import { _workspaces } from '../config-nav-workspace';
 import { LayoutSection } from '../core/layout-section';
-
-import { useAuthContext } from 'src/auth/hooks';
 
 // ----------------------------------------------------------------------
 
@@ -79,7 +79,7 @@ export function DashboardLayout({ sx, children, data }: DashboardLayoutProps) {
     if (user && !personalization) {
       dispatch(fetchPersonalization());
     }
-  }, [user, dispatch]);
+  }, [user, dispatch, personalization]);
 
   const navData = useMemo(
     () =>

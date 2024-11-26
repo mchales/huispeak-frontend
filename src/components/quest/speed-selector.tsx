@@ -1,5 +1,6 @@
 import React from 'react';
-import { Slider, Typography, Box } from '@mui/material';
+
+import { Box, Slider, Typography } from '@mui/material';
 
 interface SpeedSelectorProps {
   selectedSpeed: number;

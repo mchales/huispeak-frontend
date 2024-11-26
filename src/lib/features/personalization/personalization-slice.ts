@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+
 import axiosInstance, { endpoints } from 'src/utils/axios';
 
 interface Personalization {
@@ -25,12 +26,12 @@ export const fetchPersonalization = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const response = await axiosInstance.get(endpoints.personalization.list);
-      const data = response.data;
+      const {data} = response;
       if (Array.isArray(data) && data.length > 0) {
         return data[0];
-      } else {
+      } 
         return null;
-      }
+      
     } catch (err) {
       return thunkAPI.rejectWithValue(err);
     }
@@ -43,18 +44,18 @@ export const updatePersonalization = createAsyncThunk(
   async (updatedData: { difficulty: number; personal_details: string }, thunkAPI) => {
     try {
       const state = thunkAPI.getState() as { personalization: PersonalizationState };
-      const personalization = state.personalization.personalization;
+      const {personalization} = state.personalization;
       if (personalization) {
         const response = await axiosInstance.put(
           endpoints.personalization.detail(personalization.id),
           updatedData
         );
         return response.data;
-      } else {
+      } 
         // Create a new personalization if none exists
         const response = await axiosInstance.post(endpoints.personalization.list, updatedData);
         return response.data;
-      }
+      
     } catch (err) {
       return thunkAPI.rejectWithValue(err);
     }

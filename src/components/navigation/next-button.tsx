@@ -1,11 +1,13 @@
+import type { RootState } from 'src/lib/types';
+
+import Link from 'next/link';
 import React, { useMemo } from 'react';
 import { usePathname } from 'next/navigation';
-import Button from '@mui/material/Button';
-import { useAppSelector } from 'src/lib/hooks';
-import { RootState } from 'src/lib/types';
-import Link from 'next/link';
 
-// Define the data types based on your data structure
+import Button from '@mui/material/Button';
+
+import { useAppSelector } from 'src/lib/hooks';
+
 interface QuestData {
   id: number;
   title: string;
@@ -22,7 +24,6 @@ interface StoryData {
   adventures: AdventureData[];
 }
 
-// Define the navigation item types
 interface Quest {
   title: string;
   path: string;
@@ -70,29 +71,25 @@ export function NextButton() {
 
   const navDataState = useAppSelector((state: RootState) => state.navData);
 
-  // Handle loading and error states
-  if (navDataState.status === 'loading') {
-    return <div>Loading...</div>;
-  }
-
-  if (navDataState.status === 'failed') {
-    return <div>Error: {navDataState.error}</div>;
-  }
-
   // Transform the stories into the navData structure
-  const navData = useMemo(() => getNavData(navDataState.stories), [navDataState.stories]);
+  const navData = useMemo(() => {
+    if (navDataState.status === 'succeeded') {
+      return getNavData(navDataState.stories);
+    }
+    return [];
+  }, [navDataState]);
 
   // Compute the next path based on the current path
   const nextPath = useMemo(() => {
     let found = false;
-    let nextPath: string | null = null;
+    let computedNextPath: string | null = null;
 
-    for (let storyIndex = 0; storyIndex < navData.length; storyIndex++) {
+    for (let storyIndex = 0; storyIndex < navData.length; storyIndex += 1) {
       const story: Story = navData[storyIndex];
-      for (let adventureIndex = 0; adventureIndex < story.items.length; adventureIndex++) {
+      for (let adventureIndex = 0; adventureIndex < story.items.length; adventureIndex += 1) {
         const adventure: Adventure = story.items[adventureIndex];
         const quests = adventure.children;
-        for (let questIndex = 0; questIndex < quests.length; questIndex++) {
+        for (let questIndex = 0; questIndex < quests.length; questIndex += 1) {
           const quest: Quest = quests[questIndex];
           if (normalizePath(quest.path) === normalizePath(currentPath)) {
             // Found current page
@@ -100,19 +97,19 @@ export function NextButton() {
             if (questIndex === 0) {
               // If on overview page, go to first quest
               if (quests.length > 1) {
-                nextPath = quests[1].path;
+                computedNextPath = quests[1].path;
               } else {
                 // No quests, go to next adventure
                 const nextAdventureIndex = adventureIndex + 1;
                 if (nextAdventureIndex < story.items.length) {
-                  nextPath = story.items[nextAdventureIndex].path;
+                  computedNextPath = story.items[nextAdventureIndex].path;
                 } else {
                   // Go to next story
                   const nextStoryIndex = storyIndex + 1;
                   if (nextStoryIndex < navData.length) {
                     const nextStory = navData[nextStoryIndex];
                     if (nextStory.items.length > 0) {
-                      nextPath = nextStory.items[0].path;
+                      computedNextPath = nextStory.items[0].path;
                     }
                   }
                 }
@@ -121,20 +118,20 @@ export function NextButton() {
               // Last quest in adventure
               const nextAdventureIndex = adventureIndex + 1;
               if (nextAdventureIndex < story.items.length) {
-                nextPath = story.items[nextAdventureIndex].path;
+                computedNextPath = story.items[nextAdventureIndex].path;
               } else {
                 // Last adventure in story
                 const nextStoryIndex = storyIndex + 1;
                 if (nextStoryIndex < navData.length) {
                   const nextStory = navData[nextStoryIndex];
                   if (nextStory.items.length > 0) {
-                    nextPath = nextStory.items[0].path;
+                    computedNextPath = nextStory.items[0].path;
                   }
                 }
               }
             } else {
               // Go to next quest in adventure
-              nextPath = quests[questIndex + 1].path;
+              computedNextPath = quests[questIndex + 1].path;
             }
 
             found = true;
@@ -147,18 +144,27 @@ export function NextButton() {
     }
 
     // Default to the first quest if no path is found
-    if (!nextPath && navData.length > 0) {
+    if (!computedNextPath && navData.length > 0) {
       const firstStory = navData[0];
       if (firstStory.items.length > 0) {
         const firstAdventure = firstStory.items[0];
         if (firstAdventure.children.length > 1) {
-          nextPath = firstAdventure.path;
+          computedNextPath = firstAdventure.path;
         }
       }
     }
 
-    return nextPath;
+    return computedNextPath;
   }, [navData, currentPath]);
+
+  // Handle loading and error states
+  if (navDataState.status === 'loading') {
+    return <div>Loading...</div>;
+  }
+
+  if (navDataState.status === 'failed') {
+    return <div>Error: {navDataState.error}</div>;
+  }
 
   if (!nextPath) {
     // No next page available

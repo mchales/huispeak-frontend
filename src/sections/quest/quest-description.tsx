@@ -1,10 +1,10 @@
 'use client';
 
+import type { QuestDetailState } from 'src/lib/types';
+
 import React from 'react';
 
 import { Box, Container, Typography, CircularProgress } from '@mui/material';
-
-import { QuestDetailState } from 'src/lib/types';
 
 export function QuestDescription({ quest, status, error }: QuestDetailState) {
   if (status === 'loading') {

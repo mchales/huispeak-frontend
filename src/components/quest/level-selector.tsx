@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { Button, ButtonGroup } from '@mui/material';
 
 interface LevelSelectorProps {
@@ -6,8 +7,7 @@ interface LevelSelectorProps {
   onLevelChange: (level: number) => void;
 }
 
-const LevelSelector: React.FC<LevelSelectorProps> = ({ selectedLevel, onLevelChange }) => {
-  return (
+const LevelSelector: React.FC<LevelSelectorProps> = ({ selectedLevel, onLevelChange }) => (
     <ButtonGroup variant="contained" color="primary" aria-label="Level Selector">
       {[1, 2, 3, 4, 5].map((level) => (
         <Button
@@ -20,6 +20,5 @@ const LevelSelector: React.FC<LevelSelectorProps> = ({ selectedLevel, onLevelCha
       ))}
     </ButtonGroup>
   );
-};
 
 export default LevelSelector;

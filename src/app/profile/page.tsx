@@ -1,28 +1,31 @@
 'use client';
 
+import type { SelectChangeEvent } from '@mui/material';
+
 import React, { useState, useEffect } from 'react';
-import { useAuthContext } from 'src/auth/hooks';
+
+import { Edit, Email, Person, Settings, AccountCircle } from '@mui/icons-material';
 import {
-  Container,
-  Typography,
-  TextField,
-  Button,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  SelectChangeEvent,
   Box,
+  Button,
+  Select,
   Divider,
+  MenuItem,
+  Container,
+  TextField,
+  Typography,
+  InputLabel,
+  FormControl,
   CircularProgress,
 } from '@mui/material';
-import { Person, Email, AccountCircle, Edit, Settings } from '@mui/icons-material';
 
 import { useAppDispatch, useAppSelector } from 'src/lib/hooks';
 import {
   fetchPersonalization,
   updatePersonalization,
 } from 'src/lib/features/personalization/personalization-slice';
+
+import { useAuthContext } from 'src/auth/hooks';
 
 const Page: React.FC = () => {
   const { user } = useAuthContext();
@@ -37,7 +40,7 @@ const Page: React.FC = () => {
     if (user && !personalization) {
       dispatch(fetchPersonalization());
     }
-  }, [user, dispatch]);
+  }, [user, dispatch, personalization]);
 
   // Update local state when personalization data changes
   useEffect(() => {
@@ -57,7 +60,7 @@ const Page: React.FC = () => {
 
   const handleInstructionsSubmit = () => {
     const updatedData = {
-      difficulty: parseInt(difficulty),
+      difficulty: parseInt(difficulty, 10),
       personal_details: instructions,
     };
     dispatch(updatePersonalization(updatedData));

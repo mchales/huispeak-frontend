@@ -12,26 +12,20 @@ const Page: React.FC = () => (
   <Container maxWidth="md" sx={{ textAlign: 'center', mt: 8 }}>
     {/* Header */}
     <Typography variant="h3" component="h1" gutterBottom>
-      Practice Practical Situations in Chinese
+      Embark on a Journey to the West: Practice Practical Situations in Chinese
     </Typography>
 
     {/* Sub-header */}
     <Typography variant="h5" color="textSecondary" gutterBottom>
-      Improve your conversational skills through real-world situations
+      Improve your conversational skills through real-world scenarios intertwined with an epic story
     </Typography>
-
-    {/* Main Call-to-Action */}
-    {/* <Box mt={4}>
-        <Button variant="contained" color="primary" size="large" sx={{ px: 6, py: 2 }}>
-          Start Learning
-        </Button>
-      </Box> */}
 
     {/* Description */}
     <Box mt={6}>
       <Typography variant="body1" color="textSecondary">
-        Explore various scenarios that reflect practical, everyday conversations in Chinese. Dive
-        into cultural experiences while enhancing your language skills.
+        Join the legendary *Journey to the West* and practice Chinese through practical, everyday
+        conversations woven into the storyline. Each scenario reflects real-life situations while
+        immersing you in cultural experiences, making your learning engaging and relevant.
       </Typography>
     </Box>
     <Box sx={{ mt: 3 }}>

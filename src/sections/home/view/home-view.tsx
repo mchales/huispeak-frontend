@@ -10,12 +10,13 @@ export function HomeView() {
   return (
     <Container maxWidth="lg" sx={{ mt: 8 }}>
       {/* Hero Section */}
-      <Box textAlign="center" mb={8}>
+      <Box textAlign="center" mt={10} mb={8}>
         <Typography variant="h2" component="h1" gutterBottom>
           Practice Spoken Chinese with HuiSpeak
         </Typography>
         <Typography variant="h5" color="textSecondary" paragraph>
-          Immerse yourself in practical situations, role-playing, and cultural experiences.
+          Embark on a *Journey to the West* and master Chinese through interactive role-playing and
+          cultural experiences.
         </Typography>
 
         <Link component={RouterLink} href={paths.auth.jwt.signIn} variant="subtitle2">
@@ -33,7 +34,10 @@ export function HomeView() {
             <Typography variant="h6" component="h3" gutterBottom>
               Practice Speaking
             </Typography>
-            <Typography color="textSecondary">Improve your pronunciation and fluency.</Typography>
+            <Typography color="textSecondary">
+              Take on the role of a character in the legendary journey, improving your pronunciation
+              and fluency as you navigate conversations in the story.
+            </Typography>
           </Box>
         </Grid>
 
@@ -44,7 +48,8 @@ export function HomeView() {
               Enhance Listening
             </Typography>
             <Typography color="textSecondary">
-              Practice understanding spoken Chinese through interactive exercises.
+              Follow the story's exciting adventures while honing your ability to understand spoken
+              Chinese in diverse contexts.
             </Typography>
           </Box>
         </Grid>
@@ -56,7 +61,8 @@ export function HomeView() {
               Realistic Conversations
             </Typography>
             <Typography color="textSecondary">
-              Engage in dialogues that mimic real-life scenarios.
+              Practice cultural and practical situations while interacting with characters and
+              tackling challenges.
             </Typography>
           </Box>
         </Grid>

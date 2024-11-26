@@ -249,7 +249,7 @@ export function QuestChat({ quest, status, error: questError }: QuestDetailState
         <Box sx={{ position: 'relative', width: '80%' }}>
           {/* Background Image */}
           <img
-            src={`/images/${quest?.image_name}.png`}
+            src={`/images/${quest?.image_name}.webp`}
             alt="Background"
             style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
           />

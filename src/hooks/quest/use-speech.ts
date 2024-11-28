@@ -4,12 +4,16 @@ const useSpeechApi = () => {
   const [assistantAudioURL, setAssistantAudioURL] = useState<string | null>(null);
   const [playingAssistantAudio, setPlayingAssistantAudio] = useState<boolean>(false);
 
-  const generateAssistantSpeech = async (text: string, speed: number): Promise<string | null> => {
+  const generateAssistantSpeech = async (
+    text: string,
+    speed: number,
+    voice?: string
+  ): Promise<string | null> => {
     try {
       const formData = new FormData();
       formData.append('model', 'tts-1');
       formData.append('input', text);
-      formData.append('voice', 'alloy');
+      formData.append('voice', voice || 'alloy');
       formData.append('speed', speed.toString());
 
       const response = await fetch('/api/speech', {

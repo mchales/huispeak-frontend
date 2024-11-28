@@ -48,8 +48,8 @@ export function HomeView() {
               Enhance Listening
             </Typography>
             <Typography color="textSecondary">
-              Follow the story's exciting adventures while honing your ability to understand spoken
-              Chinese in diverse contexts.
+              Follow the story&apos;s exciting adventures while honing your ability to understand
+              spoken Chinese in diverse contexts.
             </Typography>
           </Box>
         </Grid>

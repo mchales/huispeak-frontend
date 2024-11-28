@@ -22,6 +22,12 @@ export interface QuestDetailState {
         story_num: number;
       };
     };
+    character: {
+      id: number;
+      name: string;
+      description: string;
+      voice: string;
+    };
     objectives: { id: string; objective: string }[];
     assistant_id: string | null;
   } | null;

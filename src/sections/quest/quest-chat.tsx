@@ -40,7 +40,7 @@ export function QuestChat({ quest, status, error: questError }: QuestDetailState
     error: personalizationError,
   } = personalizationState;
 
-  console.log(personalization);
+  console.log(quest);
 
   // Speeds up the first request, but also sometimes will make unnecessary requests if the user doesn't start the conversation
   useEffect(() => {
@@ -79,7 +79,8 @@ export function QuestChat({ quest, status, error: questError }: QuestDetailState
         // Generate assistant speech and get the audio URL
         const assistantAudioURL = await generateAssistantSpeech(
           assistantMessage.content,
-          selectedSpeed
+          selectedSpeed,
+          quest?.character.voice
         );
         assistantMessage.audioURL = assistantAudioURL!;
 
@@ -109,6 +110,7 @@ export function QuestChat({ quest, status, error: questError }: QuestDetailState
       createThread,
       personalization,
       selectedSpeed,
+      quest?.character.voice,
     ]
   );
 

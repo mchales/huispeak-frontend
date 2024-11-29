@@ -3,6 +3,8 @@ import type { QuestDetailState } from 'src/lib/types';
 
 import React, { useState, useEffect, useCallback } from 'react';
 
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import { Box, Stack, Button, Container, IconButton } from '@mui/material';
@@ -21,6 +23,9 @@ import MessageBubble from 'src/components/quest/message-bubble';
 import SpeedSelector from 'src/components/quest/speed-selector';
 
 export function QuestChat({ quest, status, error: questError }: QuestDetailState) {
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+
   const { isRecording, toggleRecording, setOnStopCallback } = useAudioRecorder();
   const { playingAssistantAudio, generateAssistantSpeech } = useSpeechSynthesis();
   const { threadId, creatingThread, createThread, addMessageToThread, runThread } = useThread();
@@ -39,8 +44,6 @@ export function QuestChat({ quest, status, error: questError }: QuestDetailState
     status: personalizationStatus,
     error: personalizationError,
   } = personalizationState;
-
-  console.log(quest);
 
   // Speeds up the first request, but also sometimes will make unnecessary requests if the user doesn't start the conversation
   useEffect(() => {
@@ -247,16 +250,23 @@ export function QuestChat({ quest, status, error: questError }: QuestDetailState
           </Button>
         </Box>
       )}
-      <Stack direction="row" height={530}>
-        <Box sx={{ position: 'relative', width: '80%' }}>
-          {/* Background Image */}
+      <Stack direction={isSmallScreen ? 'column' : 'row'} height={isSmallScreen ? 'auto' : 530}>
+        {/* Image and Message Bubbles */}
+        <Box sx={{ position: 'relative', width: isSmallScreen ? '100%' : '80%' }}>
           <img
             src={`/images/${quest?.image_name}.webp`}
             alt="Background"
             style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
           />
-          {hasStarted ? (
+          {hasStarted && !isSmallScreen && (
             <>
+              {/* Assistant Bubble */}
+              <MessageBubble
+                message={latestAssistantMessage}
+                isLoading={isAssistantProcessing}
+                isUser={false}
+                sx={{ position: 'absolute', bottom: '20%', left: '5%' }}
+              />
               {/* User Bubble */}
               <MessageBubble
                 message={latestUserMessage}
@@ -267,31 +277,39 @@ export function QuestChat({ quest, status, error: questError }: QuestDetailState
                 disableMicrophone={isAssistantProcessing}
                 sx={{ position: 'absolute', bottom: '20%', right: '5%' }}
               />
-
-              {/* Assistant Bubble */}
-              <MessageBubble
-                message={latestAssistantMessage}
-                isLoading={isAssistantProcessing}
-                isUser={false}
-                sx={{ position: 'absolute', bottom: '20%', left: '5%' }}
-              />
-
-              {/* Expand/Collapse Button */}
-              <IconButton
-                onClick={() => setExpanded(!expanded)}
-                sx={{ position: 'absolute', top: '5%', right: '5%', backgroundColor: 'white' }}
-              >
-                {!expanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-              </IconButton>
             </>
-          ) : (
-            <Box sx={{ overflowY: 'auto', pb: 2, pl: 1, width: '100%' }} />
           )}
         </Box>
 
-        {/* Conditional Right Panel */}
+        {/* Message Bubbles for Small Screens */}
+        {hasStarted && isSmallScreen && (
+          <>
+            {/* Assistant Bubble */}
+            <MessageBubble
+              message={latestAssistantMessage}
+              isLoading={isAssistantProcessing}
+              isUser={false}
+            />
+            {/* User Bubble */}
+            <MessageBubble
+              message={latestUserMessage}
+              isLoading={isUserProcessing}
+              isUser
+              onMicrophoneClick={toggleRecording}
+              isRecording={isRecording}
+              disableMicrophone={isAssistantProcessing}
+            />
+          </>
+        )}
+
+        {/* Message List */}
         {hasStarted && (
-          <Box sx={{ width: 250, height: '100%' }}>
+          <Box
+            sx={{
+              width: isSmallScreen ? '100%' : 250,
+              height: isSmallScreen ? 'auto' : '100%',
+            }}
+          >
             {expanded ? (
               <>
                 <MessageList
@@ -319,6 +337,22 @@ export function QuestChat({ quest, status, error: questError }: QuestDetailState
               </Box>
             )}
           </Box>
+        )}
+
+        {/* Expand/Collapse Button */}
+        {hasStarted && (
+          <IconButton
+            onClick={() => setExpanded(!expanded)}
+            sx={{
+              position: 'absolute',
+              top: isSmallScreen ? 'auto' : '5%',
+              bottom: isSmallScreen ? '10%' : 'auto',
+              right: '5%',
+              backgroundColor: 'white',
+            }}
+          >
+            {!expanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+          </IconButton>
         )}
       </Stack>
     </Container>

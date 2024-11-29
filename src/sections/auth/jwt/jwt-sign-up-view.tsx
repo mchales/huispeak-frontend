@@ -64,12 +64,12 @@ export function JwtSignUpView() {
   const [errorMsg, setErrorMsg] = useState('');
 
   const defaultValues = {
-    username: 'randomuser',
-    firstName: 'Sean',
-    lastName: 'McHale',
-    email: 'smchaleer9@gmail.com',
-    password: 'testing1234',
-    rePassword: 'testing1234',
+    username: '',
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    rePassword: '',
   };
 
   const methods = useForm<SignUpSchemaType>({
@@ -187,15 +187,7 @@ export function JwtSignUpView() {
         color: 'text.secondary',
       }}
     >
-      {'By signing up, I agree to '}
-      <Link underline="always" color="text.primary">
-        Terms of service
-      </Link>
-      {' and '}
-      <Link underline="always" color="text.primary">
-        Privacy policy
-      </Link>
-      .
+      By signing up, I agree to be respectful to the services
     </Typography>
   );
 

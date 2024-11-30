@@ -40,6 +40,7 @@
     "@mui/x-date-pickers": "^7.7.0",
     "@mui/x-tree-view": "^7.7.0",
     "@reduxjs/toolkit": "^2.3.0",
+    "@vercel/analytics": "^1.4.1",
     "autosuggest-highlight": "^3.3.4",
     "axios": "^1.7.2",
     "dayjs": "^1.11.11",

@@ -1,3 +1,4 @@
+import { Analytics } from '@vercel/analytics/react';
 import 'src/global.css';
 
 // ----------------------------------------------------------------------
@@ -53,6 +54,7 @@ export default async function RootLayout({ children }: Props) {
             </Providers>
           </SettingsProvider>
         </AuthProvider>
+        <Analytics />
       </body>
     </html>
   );

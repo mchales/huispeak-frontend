@@ -267,6 +267,12 @@ export function QuestChat({ quest, status, error: questError }: QuestDetailState
                 isUser={false}
                 sx={{ position: 'absolute', bottom: '20%', left: '5%' }}
               />
+              <IconButton
+                onClick={() => setExpanded(!expanded)}
+                sx={{ position: 'absolute', top: '5%', right: '5%', backgroundColor: 'white' }}
+              >
+                {!expanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+              </IconButton>
               {/* User Bubble */}
               <MessageBubble
                 message={latestUserMessage}
